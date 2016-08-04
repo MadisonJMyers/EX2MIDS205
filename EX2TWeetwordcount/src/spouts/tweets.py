@@ -3,6 +3,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 import itertools, time
 import tweepy, copy 
 import Queue, threading
+import psycopg2
 
 from streamparse.spout import Spout
 
@@ -53,6 +54,17 @@ class Tweets(Spout):
             access_token = auth_get("access_token")
             access_token_secret = auth_get("access_token_secret")
             auth.set_access_token(access_token, access_token_secret)
+
+        conn = psycopg2.connect(database="Tcount", user="postgres",
+                                                      password="pass", host="localhost", port="5432")
+
+        cur = conn.cursor()
+
+        cur.execute("DROP TABLE  IF EXISTS Tweetwordcount")
+        conn.commit()
+
+        cur.execute("CREATE TABLE  Tweetwordcount (word TEXT PRIMARY KEY  NOT NULL, count INT     NOT NULL);")
+        conn.commit()
 
         self._tweepy_api = tweepy.API(auth)
 
