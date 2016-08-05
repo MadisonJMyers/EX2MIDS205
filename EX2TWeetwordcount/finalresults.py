@@ -5,7 +5,7 @@ import psycopg2
 
 #Connecting to Tcount
 
-conn = psycopg2.connect(database="Tcount", user="postgres", password="pass", host="localhost", port="5432")
+conn = psycopg2.connect(database="tcount", user="postgres", password="pass", host="localhost", port="5432")
 
 
 def queryer(word):

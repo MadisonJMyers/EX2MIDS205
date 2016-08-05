@@ -55,7 +55,7 @@ class Tweets(Spout):
             access_token_secret = auth_get("access_token_secret")
             auth.set_access_token(access_token, access_token_secret)
 
-        conn = psycopg2.connect(database="Tcount", user="postgres",
+        conn = psycopg2.connect(database="tcount", user="postgres",
                                                       password="pass", host="localhost", port="5432")
 
         cur = conn.cursor()
