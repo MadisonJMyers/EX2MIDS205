@@ -2,6 +2,12 @@ from sys import argv
 import getopt
 import psycopg2
 
+
+#Connecting to Tcount
+
+conn = psycopg2.connect(database="Tcount", user="postgres", password="pass", host="localhost", port="5432")
+
+
 def queryer(word):
 	"""
 	Takes in a word as sys argument and checks Tweetwordcount database and outputs the count.
