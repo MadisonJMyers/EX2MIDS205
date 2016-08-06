@@ -4,7 +4,7 @@ from collections import Counter
 from streamparse.bolt import Bolt
 # Use psycopg to interact with Postgres
 import psycopg2
-
+from redis import StrictRedis
 
 class WordCounter(Bolt):
 
