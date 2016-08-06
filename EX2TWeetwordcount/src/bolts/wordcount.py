@@ -2,6 +2,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 from collections import Counter
 from streamparse.bolt import Bolt
+
 # Use psycopg to interact with Postgres
 import psycopg2
 from redis import StrictRedis
@@ -31,5 +32,3 @@ class WordCounter(Bolt):
         self.emit([word, self.counts[word]])
         # Log the count - just to see the topology running
         self.log('%s: %d' % (word, self.counts[word]))
-        
-
