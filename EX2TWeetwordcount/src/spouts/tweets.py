@@ -55,16 +55,6 @@ class Tweets(Spout):
             access_token_secret = auth_get("access_token_secret")
             auth.set_access_token(access_token, access_token_secret)
 
-        conn = psycopg2.connect(database="tcount", user="postgres",
-                                                      password="pass", host="localhost", port="5432")
-
-        cur = conn.cursor()
-
-        cur.execute("DROP TABLE  IF EXISTS Tweetwordcount")
-        conn.commit()
-
-        cur.execute("CREATE TABLE  Tweetwordcount (word TEXT PRIMARY KEY  NOT NULL, count INT     NOT NULL);")
-        conn.commit()
 
         self._tweepy_api = tweepy.API(auth)
 
