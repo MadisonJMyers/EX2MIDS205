@@ -14,19 +14,19 @@ class WordCounter(Bolt):
 
     def process(self, tup):
         word = tup.values[0]
-        if(self.counts[word] == 0 ):
-            conn = psycopg2.connect(database="tcount", user="postgres", password="password", host="localhost", port="5432")
-            cur = conn.cursor()
-            cur.execute("INSERT INTO Tweetwordcount (word, count) VALUES (%s, %s)", (word, str(1)));
-            conn.commit()
-            conn.close
-        else:
-            conn = psycopg2.connect(database="tcount", user="postgres", password="password", host="localhost", port="5432")
-            cur = conn.cursor()
-            uCount = self.counts[word] + 1
-            cur.execute("UPDATE Tweetwordcount SET count=%s WHERE word=%s",(uCount, word))
-            conn.commit()
-            conn.close()
+        #if(self.counts[word] == 0 ):
+        #    conn = psycopg2.connect(database="tcount", user="postgres", password="password", host="localhost", port="5432")
+        #    cur = conn.cursor()
+        #    cur.execute("INSERT INTO Tweetwordcount (word, count) VALUES (%s, %s)", (word, str(1)));
+        #    conn.commit()
+        #    conn.close
+        #else:
+        #    conn = psycopg2.connect(database="tcount", user="postgres", password="password", host="localhost", port="5432")
+        #    cur = conn.cursor()
+        #    uCount = self.counts[word] + 1
+        #    cur.execute("UPDATE Tweetwordcount SET count=%s WHERE word=%s",(uCount, word))
+        #    conn.commit()
+        #    conn.close()
  
         self.counts[word] += 1
         self.emit([word, self.counts[word]])
