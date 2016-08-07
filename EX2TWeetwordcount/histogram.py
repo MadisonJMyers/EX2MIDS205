@@ -1,17 +1,22 @@
 from sys import argv
 import psycopg2
-import getopt
 
-def hist(k1, k2):
 
-	conn = psycopg2.connect(database="tcount", user="postgres", password="password", host="localhost", port="5432")
-	cur = conn.cursor()
-	query = cur.mogrify("SELECT * FROM Tweetwordcount WHERE count BETWEEN %s AND %s ORDER BY count", (k1,k2-1))
-	cur.execute(query)
-	results = cur.fetchall()
-	for x in results:
-		print str(x[0]) + ': ' + str(x[1])
-	return results
+conn = psycopg2.connect(database="tcount", user="postgres", password="pass", host="localhost",port="5432")
 
-if __name__== "__main__":
-	hist(int(argv[1]), int(argv[2]))
+k1 = int(raw_input('lower bound: '))
+k2 = int(raw_input('upper bound: '))
+
+#get cursor
+cur = conn.cursor()
+cur.execute('''SELECT word, count FROM tweetwordcount WHERE count >= %d AND count <= %d;''' % (k1, k2))
+
+#fetch all the words
+wordhistogram  = cur.fetchall()
+wordhistogram.sort()
+
+print wordhistogram
+
+conn.commit()
+
+conn.close()
