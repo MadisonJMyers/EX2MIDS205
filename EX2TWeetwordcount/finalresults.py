@@ -2,19 +2,12 @@ from sys import argv
 import getopt
 import psycopg2
 
-
-#Connecting to Tcount
-
 conn = psycopg2.connect(database="tcount", user="postgres", password="pass", host="localhost", port="5432")
 
-
-def queryer(word):
-	"""
-	Takes in a word as sys argument and checks Tweetwordcount database and outputs the count.
-	"""
+def asker(word):
 	conn = psycopg2.connect(database="tcount", user="postgres", password="password", host="localhost", port="5432")
 	cur = conn.cursor()
-	query = cur.mogrify("SELECT count FROM Tweetwordcount WHERE word = %s", (word,))
+	query = cur.mogrify("SELECT count FROM tweetwordcount WHERE word = %s", (word,))
 	cur.execute(query)
 	count = cur.fetchall()
 	if count:
@@ -23,13 +16,10 @@ def queryer(word):
 		result = 0
 	return result
 
-def lister():
-	"""
-	Lists out all words in the db with their counts.
-	"""
+def results():
 	conn = psycopg2.connect(database="tcount", user="postgres", password="password", host="localhost", port="5432")
 	cur = conn.cursor()
-	cur.execute("SELECT * FROM Tweetwordcount")
+	cur.execute("SELECT * FROM tweetwordcount")
 	output = cur.fetchall()
 	output.sort()
 	print str(output)[1:-1]
@@ -38,7 +28,7 @@ def lister():
 
 if __name__== "__main__":
 	if len(argv) == 1:
-		lister()
+		results()
 	else:
 		for a in argv[1:]:
-			print "Total number of occurences of \"%s\": " %a + str(queryer(a))
+			print "Total number of occurences of \"%s\": " %a + str(asker(a))
